@@ -184,6 +184,20 @@ poetry run mypy .
 4. Push to the branch
 5. Create a Pull Request
 
+## Citation
+
+If you use Memorg0 in your research or project, please cite it as follows:
+
+```bibtex
+@software{memorg0,
+  author = {Dipankar Sarkar},
+  title = {Memorg0: Hierarchical Context Management System},
+  year = {2024},
+  url = {https://github.com/metamemorg/memorg0},
+  note = {A sophisticated context management system for enhancing LLM capabilities}
+}
+```
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details. 
