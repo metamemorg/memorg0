@@ -1,6 +1,6 @@
-# Memorg: Hierarchical Context Management System
+# Memorg0: Hierarchical Context Management System
 
-Memorg is a sophisticated context management system designed to enhance the capabilities of Large Language Models (LLMs) by providing efficient context management, retrieval, and optimization.
+Memorg0 is a sophisticated context management system designed to enhance the capabilities of Large Language Models (LLMs) by providing efficient context management, retrieval, and optimization.
 
 ## Features
 
@@ -23,7 +23,7 @@ The system consists of several key components:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/memorg.git
+git clone https://github.com/metamemorg/memorg0.git
 cd memorg
 ```
 
