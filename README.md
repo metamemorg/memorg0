@@ -10,14 +10,12 @@ Memorg0 is a sophisticated context management system designed to enhance the cap
 - **Context Window Optimization**: Manages token usage and creates optimized prompts
 - **Working Memory Management**: Efficiently allocates and manages token budgets
 
-## Architecture
+## Specifications
 
-The system consists of several key components:
-
-1. **Context Store**: Manages the storage and retrieval of context data
-2. **Context Manager**: Handles prioritization, compression, and working memory
-3. **Retrieval System**: Processes queries and ranks results
-4. **Context Window Optimizer**: Optimizes context for LLM consumption
+For detailed specifications, please refer to:
+- [Technical Specification](specifications/technial.md) - Core architecture and implementation details
+- [Usage Guide](specifications/usage.md) - Detailed usage patterns and examples
+- [Analysis](specifications/analysis.md) - System analysis and design decisions
 
 ## Installation
 
@@ -27,20 +25,19 @@ git clone https://github.com/metamemorg/memorg0.git
 cd memorg
 ```
 
-2. Create a virtual environment:
+2. Install using Poetry:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+poetry install
 ```
 
-3. Install dependencies:
+3. Set up your OpenAI API key:
 ```bash
-pip install -r requirements.txt
+export OPENAI_API_KEY="your-api-key-here"
 ```
 
-## Usage
+## Library Usage
 
-Basic usage example:
+Memorg0 can be used as a library in your Python projects. Here's how to integrate it:
 
 ```python
 from app.main import MemorgSystem
@@ -48,37 +45,82 @@ from app.storage.sqlite_storage import SQLiteStorageAdapter
 from app.vector_store.usearch_vector_store import USearchVectorStore
 from openai import AsyncOpenAI
 
-async def main():
-    # Initialize the system with actual storage and vector store implementations
+async def setup_memorg():
+    # Initialize components
     storage = SQLiteStorageAdapter("memorg.db")
     vector_store = USearchVectorStore("memorg.db")
     openai_client = AsyncOpenAI()
     
+    # Create system instance
     system = MemorgSystem(storage, vector_store, openai_client)
     
-    # Create a session
+    # Create a session with token budget
     session = await system.create_session("user123", {"max_tokens": 4096})
     
     # Start a conversation
     conversation = await system.start_conversation(session.id)
     
-    # Create a topic and add exchanges
-    topic = await system.context_store.create_topic(conversation.id, "Initial Discussion")
+    # Create a topic
+    topic = await system.context_store.create_topic(conversation.id, "Project Discussion")
+    
+    # Add an exchange (interaction)
     exchange = await system.add_exchange(
         topic.id,
-        "Hello, how can you help me?",
-        "I'm here to assist you with any questions or tasks you have."
+        "What are the key features?",
+        "The system provides hierarchical storage, intelligent context management, and efficient retrieval."
     )
     
-    # Search context
-    results = await system.search_context("help")
+    # Search through context
+    results = await system.search_context("key features")
     
-    # Get memory usage
+    # Monitor memory usage
     memory_usage = await system.get_memory_usage()
+    return system, session, conversation, topic
+```
 
-if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+## CLI Exploration
+
+The CLI provides an interactive way to explore and manage your memory system:
+
+```bash
+# Start the CLI
+poetry run python -m app.cli
+```
+
+Available commands in the CLI:
+- `help`: Show available commands
+- `new`: Start a new conversation
+- `search`: Search through conversation history
+- `memory`: Show memory usage statistics
+- `exit`: Exit the chat
+
+Example CLI session:
+```bash
+$ poetry run python -m app.cli
+Welcome to Memorg CLI Chat!
+Type 'help' for available commands or start chatting.
+
+You: help
+Available Commands:
+- help: Show this help message
+- new: Start a new conversation
+- search: Search through conversation history
+- memory: Show memory usage statistics
+- exit: Exit the chat
+
+You: memory
+Memory Usage:
+Total Tokens: 1,234
+Active Items: 50
+Compressed Items: 10
+Vector Count: 60
+Index Size: 2.5 MB
+
+You: search
+Enter search query: key features
+Score  Type        Content
+0.92   SEMANTIC    The system provides hierarchical storage...
+0.85   KEYWORD     Intelligent context management and...
 ```
 
 ## Components
@@ -117,7 +159,7 @@ The Context Window Optimizer:
 ### Running Tests
 
 ```bash
-pytest
+poetry run pytest
 ```
 
 ### Code Style
@@ -129,9 +171,9 @@ The project uses:
 
 Run the formatters:
 ```bash
-black .
-isort .
-mypy .
+poetry run black .
+poetry run isort .
+poetry run mypy .
 ```
 
 ## Contributing
