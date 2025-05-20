@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "memorg"
+version = "0.1.0"
+description = ""
+authors = ["Dipankar Sarkar <me@dipankar.name>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+openai = "^1.79.0"
+rich = "^14.0.0"
+tiktoken = "^0.9.0"
+aiosqlite = "^0.21.0"
+numpy = "^2.2.6"
+usearch = "^2.17.7"
+python-dotenv = "^1.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
